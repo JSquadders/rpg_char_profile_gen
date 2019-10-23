@@ -1,4 +1,4 @@
-//Pontos
+//Pontos Adicionais
 let pontosAdicionais = document.querySelectorAll(".info-adicional");
 
 pontosAdicionais.forEach(function(pontoAdicional){
