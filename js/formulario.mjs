@@ -47,26 +47,11 @@ function validaForm(formulario){
 
 function montaForm(formulario){
     let data = {};
-    for (let i = 0; i < formulario.length; ++i) {
-        let input = formulario[i];
+    
+    [...new FormData(formulario)].forEach(([campo, valor]) => data[campo] = valor);
 
-        if(!isNaN(input.value) && input.value) {
-            data[input.name] = parseInt(input.value);                     
-        }                            
-        else {
-            data[input.name] = input.value;
-        } 
-    }
-
-    document.querySelectorAll('seletor-pontos').forEach(function(seletorDePontos){
-        let qntdDePontos = 0;
-        
-        seletorDePontos.shadowRoot.querySelectorAll('input[type="checkbox"]').forEach(function(ponto){
-            if (ponto.checked)
-                qntdDePontos++;
-        });
-
-        data[seletorDePontos.getAttribute('atributo')] = qntdDePontos;
+    document.querySelectorAll('seletor-pontos').forEach(seletorDePontos => {
+        data[seletorDePontos.getAttribute('atributo')] = seletorDePontos.shadowRoot.querySelectorAll('input[type="checkbox"]:checked').length;
     });
 
     return data;
@@ -119,10 +104,8 @@ export function prepararLimpezaDoFormulario(formulario, botaoEnviaFormulario) {
     
         formulario.reset();
     
-        for (let i = 0; i < formulario.length; ++i) {
-            formulario[i].classList.remove("pontuacaoInvalida");
-        }
-    
+        [...formulario].forEach(elemento => elemento.classList.remove("pontuacaoInvalida"));
+
         reiniciarComponentesDePontos(); 
     
         placarPontosDisponiveis.reiniciarPontuacao();
