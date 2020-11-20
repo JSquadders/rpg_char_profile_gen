@@ -51,7 +51,7 @@ function montaForm(formulario){
     [...new FormData(formulario)].forEach(([campo, valor]) => data[campo] = valor);
 
     document.querySelectorAll('seletor-pontos').forEach(seletorDePontos => {
-        data[seletorDePontos.getAttribute('atributo')] = seletorDePontos.shadowRoot.querySelectorAll('input[type="checkbox"]:checked').length;
+        data[seletorDePontos.getAttribute('atributo')] = seletorDePontos.pontos;
     });
 
     return data;
@@ -92,7 +92,7 @@ export function prepararEnvioDoFormulario(formulario, botaoEnviaFormulario) {
 
 function reiniciarComponentesDePontos(){
     document.querySelectorAll('seletor-pontos').forEach(function(seletorDePontos){
-        seletorDePontos.pontos = 0;
+        seletorDePontos.reiniciarPontuacao();
     });
 }
 
