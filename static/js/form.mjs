@@ -47,6 +47,7 @@ function validaForm(pontuacaoAtributos, formulario){
 
 function montaForm(formulario){
     let data = {};
+    console.log(formulario)
     for (let i = 0; i < formulario.length; ++i) {
         let input = formulario[i];
         let pontos = document.querySelectorAll("[name='"+input.name+"']");
@@ -68,13 +69,32 @@ function montaForm(formulario){
             }                
         }
     }
+    console.log('form_data', data)
     return data;
 };
 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 function enviaForm(method, action, data){
     fetch(action, {
-        headers: {'Content-type' : 'application/json'},
+        headers: {'Content-type' : 'application/json',
+                  'X-CSRFToken': getCookie('csrftoken')},
         method: method,
+        credentials: 'same-origin',
         body: JSON.stringify(data)
     })
     .then(res => res.json())
