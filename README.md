@@ -1,2 +1,2 @@
 # rpg_char_profile_gen
-Gerador de perfis de personagens com base em seus atributos.
+Simple Django project to display an RPG based character profile builder, based on attributes.
